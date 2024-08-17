@@ -5,6 +5,8 @@ import CheckoutPage from './pages/CheckoutPage';
 import PageNotFound from './pages/404';
 
 function App() {
+
+
    return (
       <>
          <Routes>
