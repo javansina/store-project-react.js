@@ -14,15 +14,15 @@ function Card({ product }) {
 
    return (
       <>
-         <div className="border border-dashed border-orange-500 m-5 rounded-2xl col-span-4 grid grid-rows-12">
+         <div className="col-span-4 grid grid-rows-12 border-slate-400 bg-white border border-dashed rounded-2xl">
             <div className="flex items-center justify-center bg-white row-span-8 m-5">
                <img className="max-h-64 px-4" src={image} alt={title} />
             </div>
             <div className="row-span-4 m-5 flex flex-col justify-between">
-               <h4 className="font-bold text-lg text-orange-600">
+               <h4 className="font-bold text-lg text-orange-600 line-clamp-1">
                   {titleTripler(title)}
                </h4>
-               <span className="font-medium text-slate-500">{price} <span className='text-slate-800'>$</span></span>
+               <span className="font-sans text-slate-600">{price} <span className='text-slate-800'>$</span></span>
                <div className='flex justify-between'>
                   <TbListDetails/>
                   <div className='flex'>
@@ -30,6 +30,7 @@ function Card({ product }) {
                      <TbShoppingBagMinus />
                      <TbShoppingBag />
                      <FaRegTrashCan />
+                     
                   </div>
                </div>
             </div>

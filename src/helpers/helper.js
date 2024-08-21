@@ -4,7 +4,7 @@ export const titleTripler = (title) => {
 };
 
 export const searchProducts = (products, query) => {
-   if (!query.search) return products;
+   if (query.search === undefined || query.search === '') return products;
    const searchedProducts = products.filter((i) =>
       i.title.toLowerCase().includes(query.search)
    );
@@ -17,18 +17,39 @@ export const filterProducts = (products, query) => {
    return filteredData;
 };
 
-export const checkQuery = (currentQuary, newQuarry, moz) => {
-   if (moz === 'search') {
-      if (newQuarry.search === '' || newQuarry.search === undefined) {
-         const { search, ...rest } = currentQuary;
-         return rest;
+export const checkQuery = (currentQuary, newQuarry, queryType) => {
+   console.log(newQuarry);
+   
+   if (queryType === 'search') {
+      if (newQuarry.search === '') {
+         const { search, ...category } = currentQuary;
+         if (currentQuary.category === 'all' || currentQuary.category === undefined) {
+            return {};
+         } else {
+            return category;
+         }
+      } else {
+         if (currentQuary.category === 'all' || currentQuary.category === undefined ) {
+            return newQuarry;
+         } else {
+            return { ...currentQuary, ...newQuarry };
+         }
       }
    }
-   if (moz === 'category') {
+   if (queryType === 'category') {
       if (newQuarry.category === 'all') {
-         const { category, ...rest } = currentQuary;
-         return rest;
+         const { category, ...search } = currentQuary;
+         if (currentQuary.search === '' || currentQuary.search === undefined ) {
+            return {};
+         } else {
+            return search;
+         }
+      } else {
+         if (currentQuary.search === '' || currentQuary.search === undefined ) {
+            return newQuarry;
+         } else {
+            return { ...currentQuary, ...newQuarry };
+         }
       }
    }
-   return { ...currentQuary, ...newQuarry };
 };

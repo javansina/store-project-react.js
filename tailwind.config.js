@@ -2,7 +2,6 @@
 export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    theme: {
-      extend: {},
       screens: {
          xs: '480px',
          sm: '640px',
@@ -10,10 +9,23 @@ export default {
          lg: '1024px',
          xl: '1280px',
       },
-      container: {
-         center: true,
-         padding: '1rem',
+      extend: {
+         colors: {
+            myWhite: '#eeeeee',
+            myOrange: '#fe5d42',
+         },
+         container: {
+            center: true,
+            padding: '1rem',
+         },
       },
    },
-   plugins: [],
+   plugins: [
+      function ({ addVariant }) {
+         addVariant('child', '&>*');
+         addVariant('first-child', '&>:first-child');
+         addVariant('last-child', '&>:last-child');
+         addVariant('child-hover', '&>*:hover');
+      },
+   ],
 };
