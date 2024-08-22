@@ -25,10 +25,13 @@ function Search({ query, setQuery, setSearchParams }) {
                   goToSearchHandler(e);
                }}
                placeholder="search ..."
-               className='p-2 pl-5 border border-dashed border-orange-600 rounded-xl'
+               className="p-2 pl-5 border border-dashed border-orange-600 outline-none rounded-xl"
                onChange={(e) => setSearch(e.target.value.toLowerCase())}
             />
-            <span onClick={searchHandler}>
+            <span
+               className="ml-3 p-2 rounded-xl border text-myOrange border-myOrange hover:text-white hover:bg-myOrange transition-colors duration-75"
+               onClick={searchHandler}
+            >
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

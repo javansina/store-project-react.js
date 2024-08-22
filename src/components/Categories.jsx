@@ -1,24 +1,35 @@
-import { useState } from "react";
-import { checkQuery } from "../helpers/helper";
-import { categoriesDatasetList, categoriesTextList } from "../helpers/lists";
+import { useEffect, useState } from 'react';
+import { checkQuery } from '../helpers/helper';
+import { categoriesTextList } from '../helpers/lists';
 
-function Categories({query,setQuery,setSearchParams}) {
-    const [style, setStyle] = useState('all');
+function Categories({ query, setQuery, setSearchParams }) {
+   const { category } = query;
 
+   const [style, setStyle] = useState('all');
 
-    const categoryHandler = (e) => {
-        if (e.target.tagName !== 'LI') return;
-        setQuery((query) => ({
-           ...query,
-           category: e.target.innerText.toLowerCase(),
-        }));
-        setSearchParams(
-           checkQuery(query, { category: e.target.dataset.url }, 'category')
-        );
-     };
+   useEffect(() => {
+      setStyle(category);
+   }, [query]);
+   console.log('style :', style);
+   console.log('__________________________');
+
+   const categoryHandler = (e) => {
+      if (e.target.tagName !== 'LI') return;
+
+      console.log('dataset :', e.target.dataset.litext.toLowerCase());
+      console.log('__________________________');
+
+      setQuery((query) => ({
+         ...query,
+         category: e.target.dataset.litext.toLowerCase(),
+      }));
+      setSearchParams(
+         checkQuery(query, { category: e.target.dataset.url }, 'category')
+      );
+   };
    return (
       <>
-         <div className="col-span-3 h-fit bg-white border border-dashed rounded-2xl p-5">
+         <div className="col-span-3 h-fit bg-white border border-dashed border-slate-400 rounded-2xl p-5">
             <span className="flex gap-x-3 text-orange-600 mb-3">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -44,12 +55,20 @@ function Categories({query,setQuery,setSearchParams}) {
                {categoriesTextList.map((item, index) => (
                   <li
                      key={item.id}
-                     className={`hover:text-orange-600 ${
-                        style === categoriesDatasetList[index] &&
+                     className={`hover:text-orange-600 cursor-pointer ${
+                        style ===
+                           categoriesTextList[
+                              index
+                           ].title.toLocaleLowerCase() &&
                         'bg-orange-100 text-orange-600 ml-2 rounded-md'
                      }`}
-                     data-url={categoriesDatasetList[index]}
-                     onClick={() => setStyle(categoriesDatasetList[index])}
+                     data-url={categoriesTextList[index].url}
+                     data-litext={categoriesTextList[index].title}
+                     // onClick={() =>
+                     //    setStyle(
+                     //       categoriesTextList[index].title.toLocaleLowerCase()
+                     //    )
+                     // }
                   >
                      {item.title}
                   </li>

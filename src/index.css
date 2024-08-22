@@ -2,13 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-   .initial-hidden {
-      opacity: 0;
-      transform: scale(0.95);
+@layer base {
+   body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
    }
-   .loaded {
-      opacity: 1;
-      transform: scale(1);
+}
+
+@layer components {
+   .selectable {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
    }
 }
