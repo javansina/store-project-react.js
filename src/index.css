@@ -12,6 +12,14 @@
 }
 
 @layer components {
+   .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
    .selectable {
       -webkit-user-select: text;
       -moz-user-select: text;

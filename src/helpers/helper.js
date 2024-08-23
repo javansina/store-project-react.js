@@ -2,7 +2,7 @@ import { categoriesTextList } from './lists';
 let urlCategory = [];
 
 export const titleTripler = (title) => {
-   const tripled = title.split(' ').slice(0, 3).join(' ');
+   const tripled = title.split(' ').slice(0, 4).join(' ');
    return tripled;
 };
 
@@ -21,8 +21,6 @@ export const filterProducts = (products, query) => {
 };
 
 export const checkQuery = (currentQuary, newQuarry, queryType) => {
-   console.log(newQuarry);
-
    if (queryType === 'search') {
       if (newQuarry.search === '') {
          const { search, ...category } = currentQuary;
@@ -69,9 +67,6 @@ export const getInitialQuery = (searchParams) => {
    urlCategory = categoriesTextList.filter(
       (i) => i.url === searchParams.get('category')
    );
-   console.log('category :', urlCategory);
-   console.log('__________________________');
-
    const search = searchParams.get('search');
    !!urlCategory.length
       ? (query.category = urlCategory[0].title.toLowerCase())
@@ -81,10 +76,9 @@ export const getInitialQuery = (searchParams) => {
 };
 
 export const sumHandler = (selectedProducts) => {
-   const totalPrice = selectedProducts.reduce(
-      (acc, product) => acc + product.price * product.quantity,
-      0
-   );
+   const totalPrice = selectedProducts
+      .reduce((acc, product) => acc + product.price * product.quantity, 0)
+      .toFixed(2);
    const productsCounter = selectedProducts.reduce(
       (acc, product) => acc + product.quantity,
       0
@@ -94,7 +88,5 @@ export const sumHandler = (selectedProducts) => {
 
 export const productsQuantity = (state, id) => {
    const index = state.selectedProducts.findIndex((i) => i.id === id);
-   console.log(index);
-
    return state.selectedProducts[index]?.quantity;
 };

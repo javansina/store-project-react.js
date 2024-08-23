@@ -12,7 +12,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-   console.log(state, action);
    switch (action.type) {
       case 'ADD-PRODUCT':
          if (!state.selectedProducts.find((i) => i.id === action.payload.id)) {
@@ -64,7 +63,6 @@ const reducer = (state, action) => {
 
 function CartProvider({ children }) {
    const [state, dispatch] = useReducer(reducer, initialState);
-   console.log(state);
 
    return (
       <CartCotext.Provider value={{ state, dispatch }}>

@@ -10,14 +10,9 @@ function Categories({ query, setQuery, setSearchParams }) {
    useEffect(() => {
       setStyle(category);
    }, [query]);
-   console.log('style :', style);
-   console.log('__________________________');
 
    const categoryHandler = (e) => {
       if (e.target.tagName !== 'LI') return;
-
-      console.log('dataset :', e.target.dataset.litext.toLowerCase());
-      console.log('__________________________');
 
       setQuery((query) => ({
          ...query,

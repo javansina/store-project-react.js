@@ -1,24 +1,11 @@
-import {
-   TbListDetails,
-   TbShoppingBag,
-   TbShoppingBagMinus,
-   TbShoppingBagPlus,
-} from 'react-icons/tb';
-import { productsQuantity, titleTripler } from '../helpers/helper';
-import { FaRegTrashCan } from 'react-icons/fa6';
-import { useCart } from '../context/CartContext';
+import { TbListDetails } from 'react-icons/tb';
+import { titleTripler } from '../helpers/helper';
+
+import Buttons from './Buttons';
+import { Link } from 'react-router-dom';
 
 function Card({ product }) {
    const { id, title, price, image } = product;
-   const { state, dispatch } = useCart();
-   console.log(state);
-
-   const quantity = productsQuantity(state, id);
-   console.log(quantity);
-
-   const clickHandler = (type) => {
-      dispatch({ type, payload: product });
-   };
 
    return (
       <>
@@ -33,47 +20,15 @@ function Card({ product }) {
                <span className="font-sans text-slate-600">
                   {price} <span className="text-slate-800">$</span>
                </span>
-               <div className="flex justify-between">
-                  <TbListDetails />
-                  <div className="flex ">
-                     {quantity === 1 && (
-                        <div className="child:p-1.5 child:hover:bg-myOrange child:bg-myOrange/90 cursor-pointer child:rounded-md child:text-white">
-                           <FaRegTrashCan
-                              size="30"
-                              onClick={() => clickHandler('REMOVE-PRODUCT')}
-                           />
-                        </div>
-                     )}
-                     {quantity >= 2 && (
-                        <div className="child:p-1 child:hover:bg-myOrange child:bg-myOrange/90 cursor-pointer child:rounded-md child:text-white">
-                           <TbShoppingBagMinus
-                              size="30"
-                              onClick={() => clickHandler('DICREASE-PRODUCT')}
-                           />
-                        </div>
-                     )}
-                     {!quantity && (
-                        <div className="child:p-1 child:hover:bg-myOrange child:bg-myOrange/90 cursor-pointer child:rounded-md child:text-white">
-                           <TbShoppingBag
-                              size="30"
-                              onClick={() => clickHandler('ADD-PRODUCT')}
-                           />
-                        </div>
-                     )}
-                     {quantity > 0 && (
-                        <span className="font-sans text-slate-600 text-lg mt-0.5 w-7 text-center">
-                           {quantity}
-                        </span>
-                     )}
-                     {quantity >= 1 && (
-                        <div className="child:p-1 child:hover:bg-myOrange child:bg-myOrange/90 cursor-pointer child:rounded-md child:text-white">
-                           <TbShoppingBagPlus
-                              size="30"
-                              onClick={() => clickHandler('INCREASE-PRODUCT')}
-                           />
-                        </div>
-                     )}
-                  </div>
+               <div className="flex justify-between items-center">
+                  <Link
+                     hrefLang="#top"
+                     to={`/products/${id}`}
+                     className="p-1.5 rounded-md hover:bg-myOrange hover:text-white"
+                  >
+                     <TbListDetails size={20} />
+                  </Link>
+                  <Buttons id={id} product={product} />
                </div>
             </div>
          </div>

@@ -1,46 +1,72 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useMatch } from 'react-router-dom';
-
+import { FaShoppingCart } from 'react-icons/fa';
+import { HiHome } from 'react-icons/hi2';
+import { useCart } from '../context/CartContext';
 function Header() {
    const { pathname } = useLocation();
    const matchProduct = useMatch('/products/:id');
-
-   console.log(matchProduct);
+   const [style, setStyle] = useState({});
+   const { state } = useCart();
 
    useEffect(() => {
-      console.log(pathname);
-      switch (pathname) {
-         case '/checkout':
-            break;
+      if (matchProduct) {
+         setStyle({
+            icon: <HiHome size={25} />,
+            click: () => history.go(-1),
+         });
+      } else {
+         switch (pathname) {
+            case '/checkout':
+               setStyle({
+                  icon: <HiHome size={25} />,
+                  click: () => history.go(-1),
+               });
 
-         default:
-            break;
+               break;
+            case '/products':
+               setStyle({
+                  icon: (
+                     <FaShoppingCart
+                        size={38}
+                        style={{ paddingRight: '3px' }}
+                     />
+                  ),
+                  counter: true,
+                  url: '/checkout',
+               });
+
+               break;
+            case '//products/:id':
+               setStyle({
+                  icon: <HiHome size={25} />,
+                  url: '/products',
+               });
+
+               break;
+
+            default:
+               break;
+         }
       }
    }, [pathname]);
 
    return (
       <>
-         <div className="w-full h-16 bg-myOrange rounded-xl flex justify-between items-center px-7 mt-5">
-            <span className="font-bold text-2xl text-white">Store</span>
+         <div className="relative w-full min-h-16 bg-myOrange rounded-xl flex justify-between items-center px-7 mt-5">
+            <span className="font-bold text-2xl text-white">My store</span>
             <Link
-               to={'/checkout'}
-               className=" hover:text-myOrange hover:bg-white/80 rounded-md p-1.5 bg-myOrange text-white transition-colors"
+               to={style.url}
+               onClick={style.click}
+               className="hover:text-myOrange hover:bg-gray-200 rounded-md p-1.5 text-white transition-colors"
             >
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.9"
-                  stroke="currentColor"
-                  className="size-6"
-               >
-                  <path
-                     strokeLinecap="round"
-                     strokeLinejoin="round"
-                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                  />
-               </svg>
+               {style.icon}
             </Link>
+            {style.counter && state.productsCounter > 0 && (
+               <span className="absolute w-5 h-5 mt-0.5 flex justify-center items-center right-10 top-4 text-myOrange rounded-full font-sans">
+                  {state.productsCounter}
+               </span>
+            )}
          </div>
       </>
    );

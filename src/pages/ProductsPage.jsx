@@ -23,15 +23,11 @@ function ProductsPage() {
       setQuery(getInitialQuery(searchParams));
       setData(products);
    }, [products]);
-   console.log('query :', query);
-   console.log('__________________________');
 
    useEffect(() => {
       let finalProducts = searchProducts(products, query);
 
       finalProducts = filterProducts(finalProducts, query);
-      console.log('finalProducts :', finalProducts);
-      console.log('__________________________');
 
       if (!finalProducts.length) {
          setData(finalProducts);

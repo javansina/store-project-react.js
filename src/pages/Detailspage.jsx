@@ -1,46 +1,53 @@
-import { TbReportMoney } from 'react-icons/tb';
-import { HiClipboardList } from 'react-icons/hi';
-import { TbRosetteDiscountCheck } from 'react-icons/tb';
+import { useParams } from 'react-router-dom';
+import { TbCirclesRelation } from 'react-icons/tb';
+import { TbBrandCashapp } from 'react-icons/tb';
+
+import { useProducts } from '../context/ProductsContext';
+import { titleTripler } from '../helpers/helper';
+
+import NumberSeparator from '../components/NumberSeparator';
+
 function Detailspage() {
+   const { id } = useParams();
+   const products = useProducts();
+
+   window.scrollTo(0, 0);
+
+   window.scrollTo({ top: 0, behavior: 'auto' });
+
+   const [product] = products.filter((i) => i.id === +id);
+
    return (
       <>
-         <div className="grid grid-cols-12 mt-16 gap-x-8">
-            <div className="col-span-3 p-8 border-2 border-dotted border-myOrange  rounded-3xl">
-               <div className="flex gap-x-2 mb-4 font-semibold">
-                  <div className="mt-0.5">
-                     <TbReportMoney color="#ff181f" size={20} />
-                  </div>
-                  <span className="text-myOrange">Total :</span>
-                  <span className="font-sans text-slate-600">{'234.34 $'}</span>
+         {product && (
+            <div className="grid grid-cols-12 mt-7 gap-x-8">
+               <div className="col-span-3 p-8 py-14 h-fit border-2 border-dotted border-myOrange/90 rounded-3xl">
+                  <img src={product.image} alt={product.title} />
                </div>
-               <div className="flex gap-x-2 my-4 font-semibold">
-                  <div className="mt-0.5">
-                     <HiClipboardList color="#ff181f" size={20} />
+               <div className="col-span-9 flex flex-col gap-y-16 p-16 h-fit border-2 border-dotted border-slate-400 rounded-3xl">
+                  <h2 className="text-myOrange font-black text-3xl">
+                     {titleTripler(product.title)}
+                  </h2>
+                  <div className="leading-10 tracking-wider text-2xl text-slate-700">
+                     <NumberSeparator text={product.description} />
                   </div>
-                  <span className="text-myOrange">Quantity :</span>
-                  <span className="font-sans text-slate-600">{'2'}</span>
-               </div>
-               <div className="flex gap-x-2 my-4 font-semibold">
-                  <div className="mt-0.5">
-                     <TbRosetteDiscountCheck color="#ff181f" size={20} />
+                  <div className="flex items-end justify-start gap-x-14">
+                     <span className="flex items-center gap-2">
+                        <TbCirclesRelation size={25} color="#fe5d42" />
+                        <h5 className="text-lg font-semibold tracking-wide">
+                           {product.category}
+                        </h5>
+                     </span>
+                     <span className="flex items-center gap-2">
+                        <TbBrandCashapp size={25} color="#fe5d42" />
+                        <h5 className="text-lg font-sans font-medium tracking-wide">
+                           {product.price}
+                        </h5>
+                     </span>
                   </div>
-                  <span className="text-myOrange">Status :</span>
-                  <span className="font-sans text-slate-600">
-                     {'pending...'}
-                  </span>
-               </div>
-               <button className="py-2 w-[100%] rounded-xl mt-5 bg-myOrange text-white">
-                  Checkout
-               </button>
-            </div>
-            <div className="col-span-9 rounded-xl">
-               <div className="flex justify-between px-8 rounded-xl border-2 border-dotted">
-                  <img src="" alt="" />
-                  <p>asdfasdfasdf asdf asdf asd fasd fasd fasd</p>
-                  <div>fdsgsg</div>
                </div>
             </div>
-         </div>
+         )}
       </>
    );
 }
