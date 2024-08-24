@@ -7,6 +7,11 @@ import { Link } from 'react-router-dom';
 function Card({ product }) {
    const { id, title, price, image } = product;
 
+   const moz = () => {
+      window.scrollTo(0, 0);
+      location.pathname = `/products/${id}`;
+   };
+
    return (
       <>
          <div className="col-span-4 grid grid-rows-12 border-slate-400 bg-white border border-dashed rounded-2xl">
@@ -22,8 +27,7 @@ function Card({ product }) {
                </span>
                <div className="flex justify-between items-center">
                   <Link
-                     hrefLang="#top"
-                     to={`/products/${id}`}
+                     onClick={moz}
                      className="p-1.5 rounded-md hover:bg-myOrange hover:text-white"
                   >
                      <TbListDetails size={20} />
@@ -31,6 +35,7 @@ function Card({ product }) {
                   <Buttons id={id} product={product} />
                </div>
             </div>
+
          </div>
       </>
    );

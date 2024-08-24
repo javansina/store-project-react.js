@@ -7,14 +7,10 @@ import { titleTripler } from '../helpers/helper';
 
 import NumberSeparator from '../components/NumberSeparator';
 
+
 function Detailspage() {
    const { id } = useParams();
    const products = useProducts();
-
-   window.scrollTo(0, 0);
-
-   window.scrollTo({ top: 0, behavior: 'auto' });
-
    const [product] = products.filter((i) => i.id === +id);
 
    return (
